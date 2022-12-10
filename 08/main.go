@@ -28,8 +28,8 @@ func parseInput() [][]int {
 		line := strings.Split(scanner[i], "")
 
 		for j := 0; j < len(line); j++ {
-			heigth, _ := strconv.Atoi(line[j])
-			forest[i][j] = heigth
+			height, _ := strconv.Atoi(line[j])
+			forest[i][j] = height
 		}
 	}
 
@@ -68,23 +68,22 @@ func findVisibleTrees() {
 func findBestSenicScore() {
 	forest := parseInput()
 
-	higestSenicScore := 0
+	highestSenicScore := 0
 	for s := 0; s < len(forest); s++ {
 		for a := 0; a < len(forest); a++ {
 			selectedTree := forest[s][a]
-
 			verticalRow := utils.GetVerticalArray(forest, a)
 
 			senicScore := calculateSenicScoreTo(forest[s][0:a], selectedTree) * calculateSenicScoreFrom(forest[s][a+1:len(forest)], selectedTree) * calculateSenicScoreTo(verticalRow[0:s], selectedTree) * calculateSenicScoreFrom(verticalRow[s+1:len(forest)], selectedTree)
 
-			if senicScore > higestSenicScore {
+			if senicScore > highestSenicScore {
 
-				higestSenicScore = senicScore
+				highestSenicScore = senicScore
 			}
 
 		}
 	}
-	fmt.Println("Visible trees: ", higestSenicScore)
+	fmt.Println("Visible trees: ", highestSenicScore)
 }
 
 func calculateSenicScoreTo(row []int, height int) int {
